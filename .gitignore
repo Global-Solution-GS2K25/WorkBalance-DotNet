@@ -7,7 +7,6 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.desktop.ini
 
 # Build results
 [Dd]ebug/
@@ -68,6 +67,7 @@ appsettings.Development.json
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
 # Logs
 *.log

@@ -44,7 +44,7 @@ public class PlanoAcaoService : IPlanoAcaoService
             query = query.Where(p => 
                 p.Titulo.ToLower().Contains(termo) ||
                 p.Descricao.ToLower().Contains(termo) ||
-                (p.Equipe.Nome != null && p.Equipe.Nome.ToLower().Contains(termo)));
+                (p.Equipe != null && p.Equipe.Nome != null && p.Equipe.Nome.ToLower().Contains(termo)));
         }
 
         var totalItems = query.Count();

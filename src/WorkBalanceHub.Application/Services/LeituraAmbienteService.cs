@@ -42,8 +42,8 @@ public class LeituraAmbienteService : ILeituraAmbienteService
         {
             var termo = request.SearchTerm.ToLower();
             query = query.Where(l => 
-                l.EstacaoTrabalho.Nome.ToLower().Contains(termo) ||
-                (l.EstacaoTrabalho.Localizacao != null && l.EstacaoTrabalho.Localizacao.ToLower().Contains(termo)));
+                (l.EstacaoTrabalho != null && l.EstacaoTrabalho.Nome.ToLower().Contains(termo)) ||
+                (l.EstacaoTrabalho != null && l.EstacaoTrabalho.Localizacao != null && l.EstacaoTrabalho.Localizacao.ToLower().Contains(termo)));
         }
 
         var totalItems = query.Count();

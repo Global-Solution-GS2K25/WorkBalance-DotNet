@@ -58,7 +58,7 @@ public class WorkBalanceHubDbContext : DbContext
                   .WithMany(c => c.CheckIns)
                   .HasForeignKey(c => c.ColaboradorId)
                   .OnDelete(DeleteBehavior.Cascade);
-            entity.HasIndex(c => new { c.ColaboradorId, c.DataCheckIn.Date });
+            entity.HasIndex(c => new { c.ColaboradorId, c.DataCheckIn });
         });
 
         // Configurações de EstacaoTrabalho

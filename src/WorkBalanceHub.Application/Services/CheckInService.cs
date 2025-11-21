@@ -47,7 +47,7 @@ public class CheckInService : ICheckInService
         {
             var termo = request.SearchTerm.ToLower();
             query = query.Where(c => 
-                c.Colaborador.Nome.ToLower().Contains(termo) ||
+                (c.Colaborador != null && c.Colaborador.Nome.ToLower().Contains(termo)) ||
                 (c.SintomasFisicos != null && c.SintomasFisicos.ToLower().Contains(termo)) ||
                 (c.Observacoes != null && c.Observacoes.ToLower().Contains(termo)));
         }

@@ -80,6 +80,19 @@ dotnet ef migrations add InitialCreate --project ../WorkBalanceHub.Infrastructur
 dotnet ef database update --project ../WorkBalanceHub.Infrastructure --startup-project .
 ```
 
+### Modo rápido — usar SQLite para testes locais
+
+Se você não tem LocalDB/SQL Server instalado, use SQLite para testar rapidamente:
+
+```powershell
+$env:USE_SQLITE = "true"
+cd "C:\Users\playe\Saved Games"
+dotnet build
+dotnet run --project "src\WorkBalanceHub.API\WorkBalanceHub.API.csproj" --urls "http://localhost:5000;https://localhost:5001"
+```
+
+A aplicação criará automaticamente o arquivo `workbalancehub.db` e fará um seed mínimo (uma equipe e um colaborador).
+
 **Nota**: Se você ainda não tem o EF Core Tools instalado globalmente, instale com:
 
 ```bash
@@ -121,23 +134,12 @@ Com a aplicação rodando, acesse:
 
 ### Check-ins (`/api/checkins`)
 - `POST /api/checkins` - Criar check-in
-- `GET /api/checkins/{id}` - Obter check-in por ID
-- `GET /api/checkins/search` - Buscar check-ins (paginação, ordenação, filtros)
-- `GET /api/checkins/colaborador/{colaboradorId}` - Obter check-ins por colaborador
 - `GET /api/checkins/indicadores/equipe/{equipeId}` - Obter indicadores de bem-estar por equipe
 - `PUT /api/checkins/{id}` - Atualizar check-in
 - `DELETE /api/checkins/{id}` - Remover check-in
-
-### Estações de Trabalho (`/api/estacoestrabalho`)
-- `POST /api/estacoestrabalho` - Criar estação de trabalho
-- `GET /api/estacoestrabalho/{id}` - Obter estação por ID
-- `GET /api/estacoestrabalho/search` - Buscar estações (paginação, ordenação, filtros)
 - `PUT /api/estacoestrabalho/{id}` - Atualizar estação
 - `DELETE /api/estacoestrabalho/{id}` - Desativar estação
 
-### Leituras de Ambiente (`/api/leiturasambiente`)
-- `POST /api/leiturasambiente` - Criar leitura de ambiente
-- `GET /api/leiturasambiente/{id}` - Obter leitura por ID
 - `GET /api/leiturasambiente/search` - Buscar leituras (paginação, ordenação, filtros)
 - `GET /api/leiturasambiente/estacao/{estacaoTrabalhoId}` - Obter leituras por estação
 - `DELETE /api/leiturasambiente/{id}` - Remover leitura
@@ -218,13 +220,10 @@ curl "https://localhost:5001/api/checkins/indicadores/equipe/1?dataInicio=2025-0
 
 ### 3. Repository Pattern
 - Abstração do acesso a dados
-- Facilita testes unitários com mocks
-- Permite trocar a implementação de persistência
 
 ### 4. DTOs (Data Transfer Objects)
 - Separação entre modelo de domínio e modelo de apresentação
 - Previne exposição acidental de dados sensíveis
-- Facilita versionamento da API
 
 ### 5. FluentValidation
 - Validações declarativas e reutilizáveis
@@ -306,32 +305,6 @@ export ConnectionStrings__DefaultConnection="Server=...;Database=...;..."
 
 Ou criar um arquivo `appsettings.Development.json` local (não versionado).
 
-## Testes
-
-Para executar testes (quando implementados):
-
-```bash
-dotnet test
-```
-
-## Próximos Passos
-
-- [ ] Implementar autenticação e autorização (JWT)
-- [ ] Adicionar testes unitários e de integração
-- [ ] Implementar cache (Redis)
-- [ ] Adicionar logging estruturado (Serilog)
-- [ ] Implementar HATEOAS nos endpoints
-- [ ] Adicionar suporte a CORS configurável
-- [ ] Implementar rate limiting
-- [ ] Adicionar health checks
-
-## Contribuindo
-
-1. Faça um fork do projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
-3. Commit suas mudanças (`git commit -m 'Adiciona MinhaFeature'`)
-4. Push para a branch (`git push origin feature/MinhaFeature`)
-5. Abra um Pull Request
 
 ## Licença
 

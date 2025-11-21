@@ -1,7 +1,6 @@
 using WorkBalanceHub.Application.DTOs;
 using WorkBalanceHub.Domain.Entities;
 using WorkBalanceHub.Domain.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace WorkBalanceHub.Application.Services;
 

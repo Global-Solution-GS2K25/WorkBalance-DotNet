@@ -64,6 +64,12 @@ public class ColaboradoresController : ControllerBase
         if (colaborador == null)
             return NotFound();
 
+        colaborador.Links = new[] {
+            new WorkBalanceHub.Application.DTOs.LinkDto { Rel = "self", Href = Url.Action(nameof(ObterPorId), "Colaboradores", new { id = colaborador.Id }) ?? $"/api/colaboradores/{colaborador.Id}", Method = "GET" },
+            new WorkBalanceHub.Application.DTOs.LinkDto { Rel = "update", Href = Url.Action(nameof(Atualizar), "Colaboradores", new { id = colaborador.Id }) ?? $"/api/colaboradores/{colaborador.Id}", Method = "PUT" },
+            new WorkBalanceHub.Application.DTOs.LinkDto { Rel = "delete", Href = Url.Action(nameof(Deletar), "Colaboradores", new { id = colaborador.Id }) ?? $"/api/colaboradores/{colaborador.Id}", Method = "DELETE" }
+        };
+
         return Ok(colaborador);
     }
 
@@ -77,6 +83,18 @@ public class ColaboradoresController : ControllerBase
         CancellationToken cancellationToken)
     {
         var resultado = await _colaboradorService.BuscarAsync(request, cancellationToken);
+        // add minimal HATEOAS links per item
+        var items = resultado.Items.ToList();
+        foreach (var item in items)
+        {
+            item.Links = new[] {
+                new WorkBalanceHub.Application.DTOs.LinkDto { Rel = "self", Href = Url.Action(nameof(ObterPorId), "Colaboradores", new { id = item.Id }) ?? $"/api/colaboradores/{item.Id}", Method = "GET" },
+                new WorkBalanceHub.Application.DTOs.LinkDto { Rel = "update", Href = Url.Action(nameof(Atualizar), "Colaboradores", new { id = item.Id }) ?? $"/api/colaboradores/{item.Id}", Method = "PUT" },
+                new WorkBalanceHub.Application.DTOs.LinkDto { Rel = "delete", Href = Url.Action(nameof(Deletar), "Colaboradores", new { id = item.Id }) ?? $"/api/colaboradores/{item.Id}", Method = "DELETE" }
+            };
+        }
+
+        resultado.Items = items;
         return Ok(resultado);
     }
 
