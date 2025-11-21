@@ -1,0 +1,186 @@
+### WorkBalance Hub API - Exemplos de Requisições HTTP
+### Use com a extensão REST Client do VS Code ou similar
+
+@baseUrl = https://localhost:5001
+@contentType = application/json
+
+### 1. Criar Equipe
+POST {{baseUrl}}/api/equipes
+Content-Type: {{contentType}}
+
+{
+  "nome": "Desenvolvimento",
+  "descricao": "Equipe de desenvolvimento de software"
+}
+
+### 2. Criar Outra Equipe
+POST {{baseUrl}}/api/equipes
+Content-Type: {{contentType}}
+
+{
+  "nome": "Recursos Humanos",
+  "descricao": "Equipe de RH"
+}
+
+### 3. Listar Equipes
+GET {{baseUrl}}/api/equipes/search?pageNumber=1&pageSize=10
+
+### 4. Criar Colaborador
+POST {{baseUrl}}/api/colaboradores
+Content-Type: {{contentType}}
+
+{
+  "nome": "João Silva",
+  "email": "joao.silva@empresa.com",
+  "cargo": "Desenvolvedor",
+  "equipeId": 1
+}
+
+### 5. Criar Outro Colaborador
+POST {{baseUrl}}/api/colaboradores
+Content-Type: {{contentType}}
+
+{
+  "nome": "Maria Santos",
+  "email": "maria.santos@empresa.com",
+  "cargo": "Analista de RH",
+  "equipeId": 2
+}
+
+### 6. Buscar Colaboradores
+GET {{baseUrl}}/api/colaboradores/search?pageNumber=1&pageSize=10&sortBy=nome&sortDirection=asc
+
+### 7. Buscar Colaboradores com Filtro
+GET {{baseUrl}}/api/colaboradores/search?pageNumber=1&pageSize=10&searchTerm=joao
+
+### 8. Obter Colaborador por ID
+GET {{baseUrl}}/api/colaboradores/1
+
+### 9. Criar Estação de Trabalho
+POST {{baseUrl}}/api/estacoestrabalho
+Content-Type: {{contentType}}
+
+{
+  "nome": "Sala 101",
+  "localizacao": "Andar 1",
+  "descricao": "Sala de trabalho principal"
+}
+
+### 10. Criar Check-in
+POST {{baseUrl}}/api/checkins
+Content-Type: {{contentType}}
+
+{
+  "colaboradorId": 1,
+  "humor": 4,
+  "nivelEstresse": 2,
+  "qualidadeSono": 3,
+  "sintomasFisicos": "Nenhum",
+  "observacoes": "Dia produtivo"
+}
+
+### 11. Criar Outro Check-in
+POST {{baseUrl}}/api/checkins
+Content-Type: {{contentType}}
+
+{
+  "colaboradorId": 2,
+  "humor": 5,
+  "nivelEstresse": 1,
+  "qualidadeSono": 4,
+  "sintomasFisicos": null,
+  "observacoes": "Excelente dia"
+}
+
+### 12. Buscar Check-ins
+GET {{baseUrl}}/api/checkins/search?pageNumber=1&pageSize=10&sortBy=datacheckin&sortDirection=desc
+
+### 13. Obter Check-ins por Colaborador
+GET {{baseUrl}}/api/checkins/colaborador/1
+
+### 14. Obter Indicadores de Bem-estar
+GET {{baseUrl}}/api/checkins/indicadores/equipe/1?dataInicio=2025-01-01&dataFim=2025-12-31
+
+### 15. Criar Leitura de Ambiente
+POST {{baseUrl}}/api/leiturasambiente
+Content-Type: {{contentType}}
+
+{
+  "estacaoTrabalhoId": 1,
+  "temperatura": 23.5,
+  "nivelRuido": 45.0,
+  "luminosidade": 400.0
+}
+
+### 16. Criar Outra Leitura de Ambiente
+POST {{baseUrl}}/api/leiturasambiente
+Content-Type: {{contentType}}
+
+{
+  "estacaoTrabalhoId": 1,
+  "temperatura": 25.0,
+  "nivelRuido": 55.0,
+  "luminosidade": 350.0
+}
+
+### 17. Buscar Leituras de Ambiente
+GET {{baseUrl}}/api/leiturasambiente/search?pageNumber=1&pageSize=10&sortBy=dataleitura&sortDirection=desc
+
+### 18. Obter Leituras por Estação
+GET {{baseUrl}}/api/leiturasambiente/estacao/1
+
+### 19. Criar Plano de Ação
+POST {{baseUrl}}/api/planosacao
+Content-Type: {{contentType}}
+
+{
+  "titulo": "Campanha de Bem-estar",
+  "descricao": "Implementar pausas regulares e atividades de relaxamento",
+  "equipeId": 1,
+  "dataInicio": "2025-01-15T00:00:00Z",
+  "dataFim": "2025-03-15T00:00:00Z"
+}
+
+### 20. Buscar Planos de Ação
+GET {{baseUrl}}/api/planosacao/search?pageNumber=1&pageSize=10&sortBy=titulo&sortDirection=asc
+
+### 21. Obter Planos por Equipe
+GET {{baseUrl}}/api/planosacao/equipe/1
+
+### 22. Alterar Status do Plano de Ação
+PATCH {{baseUrl}}/api/planosacao/1/status
+Content-Type: {{contentType}}
+
+{
+  "status": "EmAndamento"
+}
+
+### 23. Atualizar Colaborador
+PUT {{baseUrl}}/api/colaboradores/1
+Content-Type: {{contentType}}
+
+{
+  "nome": "João Silva Santos",
+  "email": "joao.silva@empresa.com",
+  "cargo": "Desenvolvedor Sênior",
+  "equipeId": 1
+}
+
+### 24. Atualizar Check-in
+PUT {{baseUrl}}/api/checkins/1
+Content-Type: {{contentType}}
+
+{
+  "humor": 5,
+  "nivelEstresse": 1,
+  "qualidadeSono": 4,
+  "sintomasFisicos": null,
+  "observacoes": "Dia muito bom!"
+}
+
+### 25. Desativar Colaborador (Soft Delete)
+DELETE {{baseUrl}}/api/colaboradores/1
+
+### 26. Remover Check-in
+DELETE {{baseUrl}}/api/checkins/1
+
