@@ -282,15 +282,6 @@ dotnet ef database update --project ../WorkBalanceHub.Infrastructure --startup-p
 dotnet ef database update NomeDaMigrationAnterior --project ../WorkBalanceHub.Infrastructure --startup-project .
 ```
 
-## Seed de Dados (Opcional)
-
-Para popular o banco com dados iniciais, você pode criar um script ou usar o Swagger para criar registros manualmente. Exemplo de dados iniciais:
-
-1. Criar equipes
-2. Criar colaboradores
-3. Criar estações de trabalho
-4. Criar check-ins e leituras de ambiente
-
 ## Variáveis de Ambiente
 
 Você pode configurar a connection string via variável de ambiente:
